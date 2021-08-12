@@ -1,0 +1,11 @@
+use myapp;
+CREATE TABLE IF NOT EXISTS admins(
+  id INT NOT NULL AUTO_INCREMENT, 
+  login_id INT NOT NULL,
+  password VARCHAR(32) NOT NULL,
+  email VARCHAR(50) NOT NULL,
+  officer INT NOT NULL,
+  profile VARCHAR(100) NOT NULL DEFAULT "",
+  birth DATE NOT NULL,
+  PRIMARY KEY (id)
+);
