@@ -86,3 +86,8 @@ textarea[name=profile] {
   border-radius: 3px;
   background: #ddf0ff;
 }
+
+img {
+  width: 200px;
+  height: auto;
+}

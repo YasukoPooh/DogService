@@ -8,7 +8,7 @@ use MyApp\ValidCheck;
 
 class AdminAddValid
 {
-  public static function check($params)
+  public static function check($params, $faceImg)
   {
     $checkErrMsg = array();
     $checkSt = true;
@@ -69,10 +69,15 @@ class AdminAddValid
     }
 
     // 顔写真
-    list($checkSt, $err_msg) = ValidCheck::validFaceImg($params['face_img']);
+    list($checkSt, $err_msg) = ValidCheck::validFaceImg($faceImg);
     if(!$checkSt)
     {
       $checkErrMsg['face_img'] = $err_msg;
+    }
+    else
+    {
+      $faceImg = $_FILES['face_img'];
+      move_uploaded_file($faceImg['tmp_name'], '../../public/admin/img/' . $faceImg['name']);
     }
 
     return [$checkSt, $checkErrMsg];

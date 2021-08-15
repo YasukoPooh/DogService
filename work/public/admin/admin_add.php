@@ -17,7 +17,8 @@ namespace MyApp;
   if(!empty($_POST['btn_confirm']))
   {
     $checkSt = true;
-    list($checkSt, $err_msg) = AdminAddValid::check($post);
+    $faceImg = $_FILES['face_img'];
+    list($checkSt, $err_msg) = AdminAddValid::check($post, $faceImg);
 
     if($checkSt)
     {
@@ -44,7 +45,7 @@ namespace MyApp;
     <!-- 確認ページ -->
     <div>
       <h1>内容確認</h1>
-      <form action="../../app/admin/admin_add_done.php" method="post">
+      <form action="./admin_add_done.php" method="post">
         <div class="element_wrap">
           <label for="login_id">ログインID</label>
           <p><?php echo $post['login_id']; ?></p>
@@ -69,7 +70,7 @@ namespace MyApp;
           <label for="officer">役職</label>
           <p><?php if("manager" === $post['officer']){ echo '店長'; }
           elseif("staff" === $post['officer']){ echo 'スタッフ'; }
-          elseif("doctor" === $post['officer']){ echo '店長'; } ?></p>
+          elseif("doctor" === $post['officer']){ echo '医者'; } ?></p>
         </div>
         <div class="element_wrap">
           <label for="profile">プロフィール</label>
@@ -79,10 +80,10 @@ namespace MyApp;
           <label for="birth">生年月日</label>
           <p><?php echo $post['birth']; ?></p>
         </div>
-        <?php if(!empty($post['face_img'])): ?>
+        <?php if(!empty($faceImg)): ?>
           <div class="element_wrap">
             <label for="face_img">顔写真</label>
-            <p><img src="<?php echo ADMIN_IMG_DIR.$post['face_img']; ?>"></p>
+            <p><img src="<?php echo '../admin/img/' . $faceImg['name']; ?>"></p>
           </div>
         <?php endif; ?>
         <input type="submit" value="戻る" name="btn_back">
@@ -94,8 +95,8 @@ namespace MyApp;
         <input type="hidden" name="officer" value="<?php echo $post['officer']; ?>">
         <input type="hidden" name="profile" value="<?php echo $post['profile']; ?>">
         <input type="hidden" name="birth" value="<?php echo $post['birth']; ?>">
-        <?php if(!empty($post['face_img'])): ?>
-          <input type="hidden" name="face_img" value="<?php echo $post['face_img']; ?>">
+        <?php if(!empty($faceImg['name'])): ?>
+          <input type="hidden" name="face_img" value="<?php echo $faceImg['name']; ?>">
         <?php endif; ?>
       </form>
     </div>
