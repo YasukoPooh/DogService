@@ -14,11 +14,6 @@ class ValidCheck
       $ret = false;
       $err_msg = "ログインIDが入力されていません。";
     }
-    else if(!ValidCheck::validId($loginId))
-    {
-      $ret = false;
-      $err_msg = 'ログインIDが不正です。';
-    }
     else if(!ValidCheck::validMaxLen($loginId, 'id'))
     {
       $ret = false;
@@ -160,20 +155,13 @@ class ValidCheck
       $ret = false;
       $err_msg = '顔写真を選択してください。';
     }
+    else if(2000000 < $faceImg['size'])
+    {
+      $ret = false;
+      $err_msg = 'サイズが大きすぎます。';
+    }
 
     return [$ret, $err_msg];
-  }
-
-  private static function validId($loginId)
-  {
-    if(preg_match('/\A(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,100}+\z/i', $loginId))
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
   }
 
   private static function validPass($pass)
@@ -221,7 +209,7 @@ class ValidCheck
         break;
 
       case 'profile':
-        if(100 < strlen($str))
+        if(200 < strlen($str))
         {
           $ret = false;
         }
