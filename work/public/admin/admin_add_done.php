@@ -68,7 +68,7 @@ try{
   // Adminsテーブルの id を取得
   $adminId = $pdo->lastInsertId();
 
-  echo $post['login_id'] . 'を追加しました。' . PHP_EOL;
+  echo $post['login_id'] . 'さんを追加しました。' . PHP_EOL;
 }
 catch (\PDOException $e)
 {
@@ -78,7 +78,6 @@ catch (\PDOException $e)
 
 ?>
   
-  <input type="button" onclick="history.back()" value="戻る" name="btn_back">
-  <!-- <a href="admin_list.php">戻る</a> -->
+  <a href="admin_list.php">戻る</a>
 </body>
 </html>

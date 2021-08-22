@@ -28,7 +28,11 @@ input[type=password] {
 
 input[name=btn_confirm],
 input[name=btn_add],
-input[name=btn_back] {
+input[name=btn_back],
+input[name=btn_disp],
+input[name=btn_add],
+input[name=btn_edit],
+input[name=btn_delete] {
   margin-top: 10px;
   padding: 5px 20px;
   font-size: 100%;
@@ -90,4 +94,59 @@ textarea[name=profile] {
 img {
   width: 200px;
   height: auto;
+}
+
+table {
+  border-collapse: separate;
+  text-indent: initial;
+  border-spacing: 2px;
+}
+thead {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+tr {
+  vertical-align: inherit;
+  border-color: inherit;
+}
+th {
+  vertical-align: inherit;
+  font-weight: bold;
+  text-align: --internal-center;
+}
+td {
+  vertical-align: inherit;
+}
+.admin_table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+.admin_table thead {
+  color: #fff;
+  background: #4eaaf1;
+}
+.admin_table thead tr,
+.admin_table tbody tr {
+  display: flex;
+}
+.admin_table tbody tr+tr {
+  border-top: 1px solid #ccc;
+}
+.admin_table thead tr th,
+.admin_table tbody tr td {
+  display: flex;
+  flex: 1;
+  padding: .5em;
+}
+.admin_fixhead_table tbody {
+  overflow: auto;
+  height: 50vh;
 }
