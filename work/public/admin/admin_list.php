@@ -54,8 +54,8 @@ catch (\PDOException $e)
         <tbody>
           <?php foreach($admins as $admin): ?>
             <tr>
-              <td><input type="checkbox" name="admin_check"></td>
-              <td><input type="hidden" name="admin_id"><?php echo Utils::h($admin->id); ?></td>
+              <td><input type="radio" name="admin_id" value="<?php echo $admin->id; ?>"></td>
+              <td><?php echo Utils::h($admin->id); ?></td>
               <td><?php echo Utils::h($admin->login_id); ?></td>
               <td>
                 <?php

@@ -4,10 +4,10 @@ namespace MyApp;
 
   require_once(__DIR__ . '/../../app/config.php');
   require_once(__DIR__ . '/../../app/Utils.php');
-  require_once(__DIR__ . '/../../app/admin/admin_add_valid.php');
+  require_once(__DIR__ . '/../../app/admin/admin_valid.php');
 
   use MyApp\Utils;
-  use MyApp\AdminAddValid;
+  use MyApp\AdminValid;
 
   $page_flag = 0; // 0 : 入力ページへ、1 : 確認ページへ、2 : 完了ページへ
   if(!empty($_POST)){
@@ -18,7 +18,7 @@ namespace MyApp;
   {
     $checkSt = true;
     $faceImg = $_FILES['face_img'];
-    list($checkSt, $err_msg) = AdminAddValid::check($post, $faceImg);
+    list($checkSt, $err_msg) = AdminValid::add_check($post, $faceImg);
 
     if($checkSt)
     {
@@ -95,9 +95,7 @@ namespace MyApp;
         <input type="hidden" name="officer" value="<?php echo $post['officer']; ?>">
         <input type="hidden" name="profile" value="<?php echo $post['profile']; ?>">
         <input type="hidden" name="birth" value="<?php echo $post['birth']; ?>">
-        <?php if(!empty($faceImg['name'])): ?>
-          <input type="hidden" name="face_img" value="<?php echo $faceImg['name']; ?>">
-        <?php endif; ?>
+        <input type="hidden" name="face_img" value="<?php echo $faceImg['name']; ?>">
       </form>
     </div>
   <?php elseif(2 === $page_flag): ?>
