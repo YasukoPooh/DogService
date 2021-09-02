@@ -60,6 +60,19 @@ class ValidCheck
     return [$ret, $err_msg];
   }
 
+  public static function validPasswordMatch($pass, $db_pass)
+  {
+    $ret = true;
+    $err_msg = '';
+    if(!password_verify($pass, $db_pass))
+    {
+      $ret =  false;
+      $err_msg = 'パスワードに誤りがあります。';
+    }
+
+    return [$ret, $err_msg];
+  }
+
   public static function validEmail($email)
   {
     $ret = true;
@@ -125,7 +138,7 @@ class ValidCheck
     else if(!ValidCheck::validMaxLen($profile, 'profile'))
     {
       $ret = false;
-      $err_msg = 'プロフィールは100文字以内で入力してください。';
+      $err_msg = 'プロフィールは200文字以内で入力してください。';
     }
 
     return [$ret, $err_msg];
