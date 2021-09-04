@@ -107,7 +107,7 @@ catch (\PDOException $e)
           <p><img src="<?php echo '../admin/img/' . $post['old_face_img']; ?>"></p>
         <?php endif; ?>
       </div>
-      <input type="submit" value="戻る" name="btn_back">
+      <input type="button" onclick="history.back()" value="戻る" name="btn_back">
       <input type="submit" value="確定" name="btn_edit">
       <input type="hidden" name="admin_id" value="<?php echo $admin_id; ?>">
       <input type="hidden" name="login_id" value="<?php echo $post['login_id']; ?>">

@@ -161,7 +161,7 @@ class AdminValid
       $checkSt = false;
     }
     // $faceImg = $_FILES['face_img'];
-    if($params['old_face_img'] !== $faceImg['name'])
+    if(!empty($faceImg['name']) && $params['old_face_img'] !== $faceImg['name'])
     {
       unlink('../../public/admin/img/' . $params['old_face_img']);
       move_uploaded_file($faceImg['tmp_name'], '../../public/admin/img/' . $faceImg['name']);

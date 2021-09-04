@@ -163,7 +163,7 @@ class ValidCheck
     $ret = true;
     $err_msg = '';
 
-    if(empty($faceImg))
+    if(empty($faceImg['name']))
     {
       $ret = false;
       $err_msg = '顔写真を選択してください。';
