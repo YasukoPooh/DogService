@@ -5,11 +5,13 @@ namespace MyApp;
   require_once(__DIR__ . '/../../app/config.php');
   require_once(__DIR__ . '/../../app/Utils.php');
   require_once(__DIR__ . '/../../app/admin/admin_valid.php');
+  require_once(__DIR__ . '/../../app/admin/admin_utils.php');
 
   use MyApp\Utils;
   use MyApp\AdminValid;
+  use MyApp\AdminUtils;
 
-  $page_flag = 0; // 0 : 入力ページへ、1 : 確認ページへ、2 : 完了ページへ
+  $page_flag = 0; // 0 : 入力ページへ、1 : 確認ページへ
   if(!empty($_POST)){
     $post = Utils::post_h($_POST);
   }
@@ -24,10 +26,6 @@ namespace MyApp;
     {
       $page_flag = 1;
     }
-  }
-  else if(!empty($_POST['btn_add']))
-  {
-    $page_flag = 2;
   }
 
 ?>
@@ -59,18 +57,20 @@ namespace MyApp;
           <p><?php echo $post['pass2']; ?></p>
         </div>
         <div class="element_wrap">
+          <label for="name">名前</label>
+          <p><?php echo $post['name']; ?></p>
+        </div>
+        <div class="element_wrap">
           <label for="email">メールアドレス</label>
           <p><?php echo $post['email']; ?></p>
         </div>
         <div class="element_wrap">
           <label for="sex">性別</label>
-          <p><?php if("male" === $post['sex']){ echo '男性'; } else { echo '女性'; } ?></p>
+          <p><?php echo AdminUtils::sexValueToName($post['sex']); ?></p>
         </div>
         <div class="element_wrap">
           <label for="officer">役職</label>
-          <p><?php if("manager" === $post['officer']){ echo '店長'; }
-          elseif("staff" === $post['officer']){ echo 'スタッフ'; }
-          elseif("doctor" === $post['officer']){ echo '医者'; } ?></p>
+          <p><?php echo AdminUtils::officerValueToName($post['officer']); ?></p>
         </div>
         <div class="element_wrap">
           <label for="profile">プロフィール</label>
@@ -86,10 +86,11 @@ namespace MyApp;
             <p><img src="<?php echo '../admin/img/' . $faceImg['name']; ?>"></p>
           </div>
         <?php endif; ?>
-        <input type="submit" value="戻る" name="btn_back">
+        <input type="button" onclick="history.back()" value="戻る" name="btn_back">
         <input type="submit" value="追加" name="btn_add">
         <input type="hidden" name="login_id" value="<?php echo $post['login_id']; ?>">
         <input type="hidden" name="pass" value="<?php echo $post['pass']; ?>">
+        <input type="hidden" name="name" value="<?php echo $post['name']; ?>">
         <input type="hidden" name="email" value="<?php echo $post['email']; ?>">
         <input type="hidden" name="sex" value="<?php echo $post['sex'] ?>">
         <input type="hidden" name="officer" value="<?php echo $post['officer']; ?>">
@@ -98,8 +99,6 @@ namespace MyApp;
         <input type="hidden" name="face_img" value="<?php echo $faceImg['name']; ?>">
       </form>
     </div>
-  <?php elseif(2 === $page_flag): ?>
-  <!-- 追加実行 -->
   <?php else: ?>
   <!-- 入力ページ -->
     <div>
@@ -122,23 +121,28 @@ namespace MyApp;
           <?php if(!empty($err_msg['pass2'])){ echo '<br><p class="err_msg">' . $err_msg['pass2'] . '</p>'; } ?>
         </div>
         <div class="element_wrap">
+          <label for="name">名前</label>
+          <input type="text" name="name" class="name" value="<?php if(!empty($post['name'])){ echo $post['name']; } ?>">
+          <?php if(!empty($err_msg['name'])){ echo '<br><p class="err_msg">' . $err_msg['name'] . '</p>'; } ?>
+        </div>
+        <div class="element_wrap">
           <label for="email">メールアドレス</label>
           <input type="text" name="email" class="email" style="width: 200px;" value="<?php if(!empty($post['email'])){ echo $post['email'];} ?>">
           <?php if(!empty($err_msg['email'])){ echo '<br><p class="err_msg">' . $err_msg['email'] . '</p>'; } ?>
         </div>
         <div class="element_wrap">
           <label for="sex">性別</label>
-          <label for="sex_male"><input type="radio" name="sex" id="sex_male" value="male" <?php if(!empty($post['sex']) && "male" === $post['sex']){ echo 'checked'; } else { echo 'checked'; } ?>>男性</label>
-          <label for="sex_female"><input type="radio" name="sex" id="sex_female" value="female" <?php if(!empty($post['sex']) && "female" === $post['sex']){ echo 'checked'; } ?>>女性</label>
+          <label for="sex_male"><input type="radio" name="sex" id="sex_male" value="male" <?php if(!empty($post['sex']) && AdminUtils::isSexValueMale($post['sex'])){ echo 'checked'; }; ?>>男性</label>
+          <label for="sex_female"><input type="radio" name="sex" id="sex_female" value="female" <?php if(!empty($post['sex']) && AdminUtils::isSexValueFemale($post['sex'])){ echo 'checked';}; ?>>女性</label>
           <?php if(!empty($err_msg['sex'])){ echo '<br><p class="err_msg">' . $err_msg['sex'] . '</p>'; } ?>
         </div>
         <div class="element_wrap">
           <label for="officer">役職</label>
           <select name="officer">
-            <option value="none">選択してください</option>
-            <option value="manager" <?php if(!empty($post['officer']) && "manager" === $post['officer']){ echo 'checked'; } ?>>店長</option>
-            <option value="staff" <?php if(!empty($post['officer']) && "staff" === $post['officer']){ echo 'checked'; } ?>>スタッフ</option>
-            <option value="doctor" <?php if(!empty($post['officer']) && "doctor" === $post['officer']){ echo 'checked'; } ?>>医者</option>
+            <option value="" disabled style="display: none;" <?php if(empty($post['officer'])){ echo 'selected';}; ?>>選択してください</option>
+            <option value="manager" <?php if(!empty($post['officer']) && AdminUtils::isOfficerValueManager($post['officer'])){ echo 'selected'; }; ?>>店長</option>
+            <option value="staff" <?php if(!empty($post['officer']) && AdminUtils::isOfficerValueStaff($post['officer'])){ echo 'selected'; }; ?>>スタッフ</option>
+            <option value="doctor" <?php if(!empty($post['officer']) && AdminUtils::isOfficerValueDoctor($post['officer'])){ echo 'selected';}; ?>>医者</option>
           </select>
           <?php if(!empty($err_msg['officer'])){ echo '<br><p class="err_msg">' . $err_msg['officer'] . '</p>'; } ?>
         </div>

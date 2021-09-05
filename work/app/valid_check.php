@@ -73,6 +73,25 @@ class ValidCheck
     return [$ret, $err_msg];
   }
 
+  public static function validName($name)
+  {
+    $ret = true;
+    $err_msg = "";
+
+    if(empty($name))
+    {
+      $ret = false;
+      $err_msg = '名前を入力してください。';
+    }
+    else if(!ValidCheck::validMaxLen($name, 'name'))
+    {
+      $ret = false;
+      $err_msg = '名前は30文字以内で入力してください。';
+    }
+
+    return [$ret,  $err_msg];
+  }
+
   public static function validEmail($email)
   {
     $ret = true;
@@ -81,7 +100,7 @@ class ValidCheck
     if(empty($email))
     {
       $ret = false;
-      $err_msg = 'メールアドレスが入力されていません。';;
+      $err_msg = 'メールアドレスを入力してください。';
     }
     else if(!ValidCheck::_validEmail($email))
     {
@@ -138,7 +157,7 @@ class ValidCheck
     else if(!ValidCheck::validMaxLen($profile, 'profile'))
     {
       $ret = false;
-      $err_msg = 'プロフィールは200文字以内で入力してください。';
+      $err_msg = 'プロフィールは1000文字以内で入力してください。';
     }
 
     return [$ret, $err_msg];
@@ -169,6 +188,20 @@ class ValidCheck
       $err_msg = '顔写真を選択してください。';
     }
     else if(2000000 < $faceImg['size'])
+    {
+      $ret = false;
+      $err_msg = 'サイズが大きすぎます。';
+    }
+
+    return [$ret, $err_msg];
+  }
+
+  public static function validEditFaceImg($faceImg)
+  {
+    $ret = true;
+    $err_msg = "";
+
+    if(!empty($faceImg['name']) && 2000000 < $faceImg['size'])
     {
       $ret = false;
       $err_msg = 'サイズが大きすぎます。';
@@ -221,8 +254,15 @@ class ValidCheck
         }
         break;
 
+      case 'name':
+        if(30 < strlen($str))
+        {
+          $ret = false;
+        }
+        break;
+
       case 'profile':
-        if(200 < strlen($str))
+        if(1000 < strlen($str))
         {
           $ret = false;
         }

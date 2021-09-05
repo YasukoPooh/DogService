@@ -4,10 +4,12 @@ namespace MyApp;
 
 require_once(__DIR__ . '/../../app/Utils.php');
 require_once(__DIR__ . '/../../app/Database.php');
+require_once(__DIR__ . '/../../app/admin/admin_utils.php');
 
 use Exception;
 use MyApp\Utils;
 use MyApp\Database;
+use MyApp\AdminUtils;
 
 ?>
 
@@ -24,26 +26,8 @@ use MyApp\Database;
 $post = Utils::post_h($_POST);
 
 // テーブル更新用に値を置換
-if("male" === $post['sex'])
-{
-  $sex = 1;
-}
-else
-{
-  $sex = 2;
-}
-if("manager" === $post['officer'])
-{
-  $officer = 1;
-}
-else if("staff" === $post['officer'])
-{
-  $officer = 2;
-}
-else
-{
-  $officer = 3;
-}
+$sex = AdminUtils::sexValueToDb($post['sex']);
+$officer = AdminUtils::officerValueToDb($post['officer']);
 
 // ファイル名取得
 $faceImgName = $post['face_img'];
@@ -51,9 +35,10 @@ $faceImgName = $post['face_img'];
 try{
   // Adminsテーブルのレコード更新
   $pdo = Database::getInstance();
-  $sql = 'UPDATE admins SET login_id = :login_id, email = :email, sex = :sex, officer = :officer, profile = :profile, birth = :birth, face_img = :face_img WHERE id = :id';
+  $sql = 'UPDATE admins SET login_id = :login_id, name = :name, email = :email, sex = :sex, officer = :officer, profile = :profile, birth = :birth, face_img = :face_img WHERE id = :id';
   $stmt = $pdo->prepare($sql);
   $stmt->bindValue('login_id', $post['login_id'], \PDO::PARAM_INT);
+  $stmt->bindValue('name', $post['name'], \PDO::PARAM_STR);
   $stmt->bindValue('email', $post['email'], \PDO::PARAM_STR);
   $stmt->bindValue('sex', $sex, \PDO::PARAM_INT);
   $stmt->bindValue('officer', $officer, \PDO::PARAM_INT);

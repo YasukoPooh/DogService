@@ -5,10 +5,12 @@ namespace MyApp;
 require_once(__DIR__ . '/../../app/config.php');
 require_once(__DIR__ . '/../../app/Utils.php');
 require_once(__DIR__ . '/../../app/Database.php');
+require_once(__DIR__ . '/../../app/admin/admin_utils.php');
 
 use Exception;
 use MyApp\Utils;
 use MyApp\Database;
+use MyApp\AdminUtils;
 
 ?>
 
@@ -26,7 +28,7 @@ try
 {
   // Adminsテーブルのレコード取得
   $pdo = Database::getInstance();
-  $sql = 'SELECT id, login_id, officer FROM admins';
+  $sql = 'SELECT id, login_id, name, officer FROM admins';
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
   $admins = $stmt->fetchAll();
@@ -48,6 +50,7 @@ catch (\PDOException $e)
             <th>操作</th>
             <th>id</th>
             <th>ログインID</th>
+            <th>名前</th>
             <th>役職</th>
           </tr>
         </thead>
@@ -57,25 +60,8 @@ catch (\PDOException $e)
               <td><input type="radio" name="admin_id" value="<?php echo $admin->id; ?>"></td>
               <td><?php echo Utils::h($admin->id); ?></td>
               <td><?php echo Utils::h($admin->login_id); ?></td>
-              <td>
-                <?php
-                  switch(Utils::h($admin->officer))
-                  {
-                    case 1:
-                      echo '店長';
-                      break;
-                    case 2:
-                      echo 'スタッフ';
-                      break;
-                    case 3:
-                      echo '医者';
-                      break;
-                    default:
-                      echo '不明';
-                      break;
-                  }
-                ?>
-              </td>
+              <td><?php echo Utils::h($admin->name); ?></td>
+              <td><?php echo AdminUtils::officerDbToName(Utils::h($admin->officer)); ?></td>
             </tr>
           <?php endforeach; ?>
         </tbody>

@@ -37,6 +37,14 @@ class AdminValid
       $checkSt = false;
     }
 
+    // 名前
+    list($itemCheckSt, $err_msg) = ValidCheck::validName($params['name']);
+    if(!$itemCheckSt)
+    {
+      $checkErrMsg['name'] = $err_msg;
+      $checkSt = false;
+    }
+
     // メールアドレス
     list($itemCheckSt, $err_msg) = ValidCheck::validEmail($params['email']);
     if(!$itemCheckSt)
@@ -85,11 +93,14 @@ class AdminValid
     }
     else
     {
-      // $faceImg = $_FILES['face_img'];
-      move_uploaded_file($faceImg['tmp_name'], '../../public/admin/img/' . $faceImg['name']);
+      if($checkSt)
+      {
+        // $faceImg = $_FILES['face_img'];
+        move_uploaded_file($faceImg['tmp_name'], '../../public/admin/img/' . $faceImg['name']);
+      }
     }
 
-    return [$itemCheckSt, $checkErrMsg];
+    return [$checkSt, $checkErrMsg];
   }
 
   public static function edit_check($params, $faceImg)
@@ -110,6 +121,14 @@ class AdminValid
     if(!$itemCheckSt)
     {
       $checkErrMsg['pass'] = $err_msg;
+      $checkSt = false;
+    }
+
+    // 名前
+    list($itemCheckSt, $err_msg) = ValidCheck::validName($params['name']);
+    if(!$itemCheckSt)
+    {
+      $checkErrMsg['name'] = $err_msg;
       $checkSt = false;
     }
 
@@ -154,17 +173,41 @@ class AdminValid
     }
 
     // 顔写真
-    list($itemCheckSt, $err_msg) = ValidCheck::validFaceImg(($faceImg));
+    list($itemCheckSt, $err_msg) = ValidCheck::validEditFaceImg(($faceImg));
     if(!$itemCheckSt)
     {
       $checkErrMsg['face_img'] = $err_msg;
       $checkSt = false;
     }
     // $faceImg = $_FILES['face_img'];
-    if(!empty($faceImg['name']) && $params['old_face_img'] !== $faceImg['name'])
+    if($checkSt && !empty($faceImg['name']) && $params['old_face_img'] !== $faceImg['name'])
     {
       unlink('../../public/admin/img/' . $params['old_face_img']);
       move_uploaded_file($faceImg['tmp_name'], '../../public/admin/img/' . $faceImg['name']);
+    }
+
+    return [$checkSt, $checkErrMsg];
+  }
+
+  public static function delete_check($params)
+  {
+    $checkErrMsg = array();
+    $checkSt = true;
+
+    // パスワード
+    list($itemCheckSt, $err_msg) = ValidCheck::validPasswordMatch($params['pass'], $params['db_pass']);
+    if(!$itemCheckSt)
+    {
+      $checkErrMsg['pass'] = $err_msg;
+      $checkSt = false;
+    }
+
+    if($checkSt)
+    {
+      if(!empty($params['face_img']))
+      {
+        unlink('../../public/admin/img/' . $params['face_img']);
+      }
     }
 
     return [$checkSt, $checkErrMsg];
