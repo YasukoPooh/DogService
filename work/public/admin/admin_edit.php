@@ -6,11 +6,13 @@ require_once(__DIR__ . '/../../app/config.php');
 require_once(__DIR__ . '/../../app/Utils.php');
 require_once(__DIR__ . '/../../app/Database.php');
 require_once(__DIR__ . '/../../app/admin/admin_valid.php');
+require_once(__DIR__ . '/../../app/admin/admin_utils.php');
 
 use Exception;
 use MyApp\Utils;
 use MyApp\Database;
 use MyApp\AdminValid;
+use MyApp\AdminUtils;
 
 $admin_id = $_GET['admin_id'];
 
@@ -48,7 +50,7 @@ try
 {
   // Adminsテーブルのレコード取得
   $pdo = Database::getInstance();
-  $sql = 'SELECT login_id, password, email, sex, officer, profile, birth, face_img FROM admins WHERE id = :id';
+  $sql = 'SELECT login_id, password, name, email, sex, officer, profile, birth, face_img FROM admins WHERE id = :id';
   $stmt = $pdo->prepare($sql);
   $stmt->bindValue('id', $admin_id, \PDO::PARAM_INT);
   $stmt->execute();
@@ -80,20 +82,24 @@ catch (\PDOException $e)
         <p><?php echo $post['pass']; ?></p>
       </div>
       <div class="element_wrap">
+        <label for="name">名前</label>
+        <p><?php echo $post['name']; ?></p>
+      </div>
+      <div class="element_wrap">
         <label for="email">メールアドレス</label>
         <p><?php echo $post['email']; ?></p>
       </div>
       <div class="element_wrap">
         <label for="sex">性別</label>
-        <p><?php if("male" === $post['sex']){ echo '男性'; } else { echo '女性'; }; ?></p>
+        <p><?php echo AdminUtils::sexValueToName($post['sex']); ?></p>
       </div>
       <div class="element_wrap">
         <label for="officer">役職</label>
-        <p><?php if("manager" === $post['officer']){ echo '店長'; } elseif("staff" === $post['officer']){ echo 'スタッフ'; } elseif("doctor" === $post['officer']){ echo '医者'; }; ?></p>
+        <p><?php echo AdminUtils::officerValueToName($post['officer']); ?></p>
       </div>
       <div class="element_wrap">
         <label for="profile">プロフィール</label>
-        <p><?php echo $post['profile']; ?></p>
+        <p><?php echo nl2br($post['profile']); ?></p>
       </div>
       <div class="element_wrap">
         <label for="birth">生年月日</label>
@@ -111,6 +117,7 @@ catch (\PDOException $e)
       <input type="submit" value="確定" name="btn_edit">
       <input type="hidden" name="admin_id" value="<?php echo $admin_id; ?>">
       <input type="hidden" name="login_id" value="<?php echo $post['login_id']; ?>">
+      <input type="hidden" name="name" value="<?php echo $post['name']; ?>">
       <input type="hidden" name="email" value="<?php echo $post['email']; ?>">
       <input type="hidden" name="sex" value="<?php echo $post['sex']; ?>">
       <input type="hidden" name="officer" value="<?php echo $post['officer']; ?>">
@@ -139,22 +146,27 @@ catch (\PDOException $e)
         <?php if(!empty($err_msg['pass'])){ echo '<br><p class="err_msg">' . $err_msg['pass'] . '</p>'; } ?>
       </div>
       <div class="element_wrap">
+        <label for="name">名前</label>
+        <input type="text" name="name" class="name" value="<?php if(!empty($post['name'])){ echo $post['name']; } else { echo $admin->name; }; ?>">
+        <?php if(!empty($err_msg['name'])){ echo '<br><p class="err_msg">' . $err_msg['name'] . '</p>'; }; ?>
+      </div>
+      <div class="element_wrap">
         <label for="email">メールアドレス</label>
         <input type="text" name="email" class="email" style="width: 200px;" value="<?php if(!empty($post['email'])){ echo $post['email'];} else { echo $admin->email;} ?>">
         <?php if(!empty($err_msg['email'])){ echo '<br><p class="err_msg">' . $err_msg['email'] . '/<p>'; } ?>
       </div>
       <div class="element_wrap">
         <label for="sex">性別</label>
-        <label for="sex_male"><input type="radio" name="sex" id="sex_male" value="male" <?php if(!empty($post['sex']) && "male" === $post['sex']){ echo 'checked'; } else if(empty($post['sex']) && 1 === $admin->sex){ echo 'checked';} ?>>男性</label>
-        <label for="sex_female"><input type="radio" name="sex" id="sex_female" value="female" <?php if(!empty($post['sex']) && "female" === $post['sex']){ echo 'checked'; } else if(empty($post['sex']) && 2 === $admin->sex){ echo 'checked';}; ?>>女性</label>
+        <label for="sex_male"><input type="radio" name="sex" id="sex_male" value="male" <?php if(!empty($post['sex']) && AdminUtils::isSexValueMale($post['sex'])){ echo 'checked'; } elseif(empty($post['sex']) && AdminUtils::isSexDbMale($admin->sex)){ echo 'checked'; }; ?>>男性</label>
+        <label for="sex_female"><input type="radio" name="sex" id="sex_female" value="female" <?php if(!empty($post['sex']) && AdminUtils::isSexValueFemale($post['sex'])){ echo 'checked'; } elseif(empty($post['sex']) && AdminUtils::isSexDbFemale($admin->sex)){ echo 'checked'; }; ?>>女性</label>
         <?php if(!empty($err_msg['sex'])){ echo '<br><p class="err_msg">' . $err_msg['sex'] . '</p>'; } ?>
       </div>
       <div class="element_wrap">
         <label for="officer">役職</label>
         <select name="officer">
-          <option value="manager" <?php if(!empty($post['officer']) && "manager" === $post['officer']){ echo 'checked';} else if(1 === $admin->officer){ echo 'checked'; }; ?>>店長</option>
-          <option value="staff" <?php if(!empty($post['officer']) && "staff" === $post['officer']){ echo 'checked'; } else if(2 === $admin->officer){ echo 'checked'; }; ?>>スタッフ</option>
-          <option value="doctor" <?php if(!empty($post['officer']) && "doctor" === $post['officer']){ echo 'checked'; } else if(3 === $admin->officer){ echo 'checked';}; ?>>医者</option>
+          <option value="manager" <?php if(!empty($post['officer']) && AdminUtils::isOfficerValueManager($post['officer'])){ echo 'selected'; } elseif(empty($post['officer']) && AdminUtils::isOfficerDbManager($admin->officer)){ echo 'selected'; }; ?>>店長</option>
+          <option value="staff" <?php if(!empty($post['officer']) && AdminUtils::isOfficerValueStaff($post['officer'])){ echo 'selected'; } elseif(empty($post['officer']) && AdminUtils::isOfficerDbStaff($admin->officer)){ echo 'selected'; }; ?>>スタッフ</option>
+          <option value="doctor" <?php if(!empty($post['officer']) && AdminUtils::isOfficerValueDoctor($post['officer'])){ echo 'selected'; } elseif(empty($post['officer']) && AdminUtils::isOfficerDbDoctor($admin->officer)){ echo 'selected'; }; ?>>医者</option>
         </select>
         <?php if(!empty($err_msg['officer'])){ echo '<br><p class="err_msg">' . $err_msg['officer'] . '</p>'; } ?>
       </div>
