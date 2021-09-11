@@ -92,6 +92,25 @@ class ValidCheck
     return [$ret,  $err_msg];
   }
 
+  public static function validProductName($productName)
+  {
+    $ret = true;
+    $err_msg = "";
+
+    if(empty($productName))
+    {
+      $ret = false;
+      $err_msg = '商品名を入力してください。';
+    }
+    else if(!ValidCheck::validMaxLen($productName, 'name'))
+    {
+      $ret = false;
+      $err_msg = '商品名は30文字以内で入力してください。';
+    }
+
+    return [$ret, $err_msg];
+  }
+
   public static function validEmail($email)
   {
     $ret = true;
@@ -144,6 +163,20 @@ class ValidCheck
     return [$ret, $err_msg];
   }
 
+  public static function validPrice($price)
+  {
+    $ret = true;
+    $err_msg = "";
+
+    if(empty($price))
+    {
+      $ret = false;
+      $err_msg = '価格を入力してください。';
+    }
+
+    return [$ret, $err_msg];
+  }
+
   public static function validProfile($profile)
   {
     $ret = true;
@@ -163,6 +196,25 @@ class ValidCheck
     return [$ret, $err_msg];
   }
 
+  public static function validComment($comment)
+  {
+    $ret = true;
+    $err_msg = "";
+
+    if(empty($comment))
+    {
+      $ret = false;
+      $err_msg = 'コメントを入力してください。';
+    }
+    else if(!ValidCheck::validMaxLen($comment, 'comment'))
+    {
+      $ret = false;
+      $err_msg = 'コメントは500文字以内で入力してください。';
+    }
+
+    return [$ret, $err_msg];
+  }
+
   public static function validBirth($birth)
   {
     $ret = true;
@@ -177,17 +229,17 @@ class ValidCheck
     return [$ret, $err_msg];
   }
 
-  public static function validFaceImg($faceImg)
+  public static function validImage($image)
   {
     $ret = true;
     $err_msg = '';
 
-    if(empty($faceImg['name']))
+    if(empty($image['name']))
     {
       $ret = false;
-      $err_msg = '顔写真を選択してください。';
+      $err_msg = '写真を選択してください。';
     }
-    else if(2000000 < $faceImg['size'])
+    else if(2000000 < $image['size'])
     {
       $ret = false;
       $err_msg = 'サイズが大きすぎます。';
@@ -196,12 +248,12 @@ class ValidCheck
     return [$ret, $err_msg];
   }
 
-  public static function validEditFaceImg($faceImg)
+  public static function validEditImage($image)
   {
     $ret = true;
     $err_msg = "";
 
-    if(!empty($faceImg['name']) && 2000000 < $faceImg['size'])
+    if(!empty($image['name']) && 2000000 < $image['size'])
     {
       $ret = false;
       $err_msg = 'サイズが大きすぎます。';
@@ -263,6 +315,13 @@ class ValidCheck
 
       case 'profile':
         if(1000 < strlen($str))
+        {
+          $ret = false;
+        }
+        break;
+
+      case 'comment':
+        if(500 < strlen($str))
         {
           $ret = false;
         }

@@ -23,6 +23,7 @@ if(isset($_POST['btn_edit']))
   if(!isset($_POST['admin_id']))
   {
     header('Location: admin_ng.php');
+    exit();
   }
   $admin_id = $_POST['admin_id'];
   header('Location: admin_edit.php?admin_id=' .$admin_id);

@@ -1,0 +1,9 @@
+use myapp;
+CREATE TABLE IF NOT EXISTS products(
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(64) NOT NULL,
+  price INT NOT NULL,
+  image VARCHAR(100) NOT NULL,
+  comment VARCHAR(512) NOT NULL DEFAULT "",
+  PRIMARY KEY (id)
+);
