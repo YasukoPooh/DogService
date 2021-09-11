@@ -81,7 +81,8 @@ label[for=sex_female] {
   color: red;
 }
 
-textarea[name=profile] {
+textarea[name=profile],
+textarea[name=comment] {
   padding: 5px 10px;
   width: 60%;
   height: 100px;
@@ -123,30 +124,38 @@ th {
 td {
   vertical-align: inherit;
 }
-.admin_table {
+.admin_table,
+.product_table {
   display: flex;
   flex-direction: column;
   border: 1px solid #ccc;
   background-color: #fff;
 }
-.admin_table thead {
+.admin_table thead,
+.product_table thead {
   color: #fff;
   background: #4eaaf1;
 }
 .admin_table thead tr,
-.admin_table tbody tr {
+.admin_table tbody tr,
+.product_table thead tr,
+.product_table tbody tr {
   display: flex;
 }
-.admin_table tbody tr+tr {
+.admin_table tbody tr+tr,
+.product_table tbody tr+tr {
   border-top: 1px solid #ccc;
 }
 .admin_table thead tr th,
-.admin_table tbody tr td {
+.admin_table tbody tr td,
+.product_table thead tr th,
+.product_table tbody tr td {
   display: flex;
   flex: 1;
   padding: .5em;
 }
-.admin_fixhead_table tbody {
+.admin_fixhead_table tbody,
+.product_fixhead_table tbody {
   overflow: auto;
   height: 50vh;
 }

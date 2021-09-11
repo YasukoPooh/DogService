@@ -85,7 +85,7 @@ class AdminValid
     }
 
     // 顔写真
-    list($itemCheckSt, $err_msg) = ValidCheck::validFaceImg($faceImg);
+    list($itemCheckSt, $err_msg) = ValidCheck::validImage($faceImg);
     if(!$itemCheckSt)
     {
       $checkErrMsg['face_img'] = $err_msg;
@@ -173,7 +173,7 @@ class AdminValid
     }
 
     // 顔写真
-    list($itemCheckSt, $err_msg) = ValidCheck::validEditFaceImg(($faceImg));
+    list($itemCheckSt, $err_msg) = ValidCheck::validEditImage(($faceImg));
     if(!$itemCheckSt)
     {
       $checkErrMsg['face_img'] = $err_msg;
