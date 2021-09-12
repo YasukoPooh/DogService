@@ -212,6 +212,22 @@ class AdminValid
 
     return [$checkSt, $checkErrMsg];
   }
+
+  public static function login_check($params)
+  {
+    $checkErrMsg = array();
+    $checkSt = true;
+
+    // パスワード
+    list($itemCheckSt, $err_msg) = ValidCheck::validPasswordMatch($params['pass'], $params['db_pass']);
+    if(!$itemCheckSt)
+    {
+      $checkErrMsg['pass'] = $err_msg;
+      $checkSt = false;
+    }
+
+    return [$checkSt, $checkErrMsg];
+  }
 }
 
 ?>

@@ -18,6 +18,7 @@ use MyApp\AdminUtils;
 <head>
   <meta charset="UTF-8">
   <title> 管理者追加完了 </title>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
@@ -53,7 +54,7 @@ try{
   // Adminsテーブルの id を取得
   $adminId = $pdo->lastInsertId();
 
-  echo $post['login_id'] . 'さんを追加しました。' . PHP_EOL;
+  // echo $post['login_id'] . 'さんを追加しました。' . PHP_EOL;
 }
 catch (\PDOException $e)
 {
@@ -63,6 +64,7 @@ catch (\PDOException $e)
 
 ?>
   
+  <p class="message"><?php echo $post['login_id']; ?>さんを追加しました。</p>
   <a href="admin_list.php">戻る</a>
 </body>
 </html>

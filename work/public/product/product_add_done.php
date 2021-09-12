@@ -16,6 +16,7 @@ use MyApp\Database;
 <head>
   <meta charset="UTF-8">
   <title> 商品追加完了 </title>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
   
@@ -41,7 +42,7 @@ try
   // Productsテーブルの id を取得
   $productId = $pdo->lastInsertId();
 
-  echo $post['name'] . 'を追加しました。' . PHP_EOL;
+  // echo $post['name'] . 'を追加しました。' . PHP_EOL;
 }
 catch (\PDOException $e)
 {
@@ -51,6 +52,7 @@ catch (\PDOException $e)
 
 ?>
 
+  <p class="message"><?php echo $post['name']; ?>を追加しました。</p>
   <a href="product_list.php">戻る</a>
 </body>
 </html>

@@ -1,5 +1,7 @@
 body {
-  font-family: Arial, sans-serif;
+  /* font-family: Arial, sans-serif; */
+  font-family: 'Ubuntu', sans-serif;
+  background-color: #ddf0ff;
   padding: 20px;
   text-align: center;
 }
@@ -17,13 +19,36 @@ h1 {
   border-bottom: 1px solid #999;
 }
 
-input[type=text],
-input[type=password] {
+input[class=login_id],
+input[class=password],
+input[class=name],
+input[class=email],
+input[class=price] {
   padding: 5px 10px;
   font-size: 86%;
   border: none;
   border-radius: 3px;
-  background-color: #ddf0ff;
+  background-color: #ffffff;
+}
+
+input[class=sign_login_id],
+input[class=sign_pass] {
+  width: 76%;
+  color: rgb(38, 50, 56);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1px;
+  background-color: rgba(136, 126, 126, 0.04);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  box-sizing: border-box;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  margin-bottom: 50px;
+  text-align: center;
+  margin-bottom: 27px;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 input[name=btn_confirm],
@@ -44,10 +69,39 @@ input[name=btn_delete] {
   background: #4eaaf1;
 }
 
+input[name=btn_login] {
+  cursor: pointer;
+  border-radius: 5em;
+  border: none;
+  color: #fff;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 13px;
+  /* box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.4); */
+  background: linear-gradient(to right, #2887d1, #a2c8e7);
+}
+
 input[name=btn_back] {
   margin-right: 20px;
   box-shadow: 0 3px 0 #777;
   background: #999;
+}
+
+p[class=message] {
+  padding: 5px 10px;
+  font-size: 18px;
+  color: #2887d1;
+  text-align: center;
+}
+
+a {
+  /* text-shadow: 0px 0px 3px #2887d1; */
+  color: #2887d1;
+  text-align: center;
+  text-decoration: none;
 }
 
 .element_wrap {
@@ -89,7 +143,7 @@ textarea[name=comment] {
   font-size: 86%;
   border: none;
   border-radius: 3px;
-  background: #ddf0ff;
+  background: #FFF;
 }
 
 img {
@@ -158,4 +212,32 @@ td {
 .product_fixhead_table tbody {
   overflow: auto;
   height: 50vh;
+}
+
+.login,
+div[class=admin_top] {
+  background-color: #FFFFFF;
+  width: 400px;
+  height: 400px;
+  margin: 7em auto;
+  border-radius: 1.5em;
+  box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+}
+
+.sign,
+p[class=admin_top] {
+  padding-top: 40px;
+  color: #4eaaf1;
+  font-family: 'ubuntu', sans-serif;
+  font-weight: bold;
+  font-size: 23px;
+}
+
+form.admin_login {
+  padding-top: 40px;
+}
+
+.login_id:focus,
+.login_pass:focus {
+  border: 2px solid rgba(0, 0, 0, 0.18) !important;
 }

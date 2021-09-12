@@ -137,7 +137,7 @@ catch (\PDOException $e)
     <form action="" method="post" enctype="multipart/form-data">
       <div class="element_wrap">
         <label for="login_id">ログインID</label>
-        <input type="text" name="login_id" class="adminLoginId" maxlength="20" value="<?php if(!empty($post['login_id'])){ echo $post['login_id'];} else {echo $admin->login_id;}; ?>">
+        <input type="text" name="login_id" class="login_id" maxlength="20" value="<?php if(!empty($post['login_id'])){ echo $post['login_id'];} else {echo $admin->login_id;}; ?>">
         <?php if(!empty($err_msg['login_id'])){ echo '<br><p class="err_msg">' . $err_msg['login_id'] .  '</p>'; } ?>
       </div>
       <div class="element_wrap">

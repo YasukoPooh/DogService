@@ -107,22 +107,22 @@ namespace MyApp;
         <!-- <p>※ログインID・パスワードは、半角英数字8文字以上20文字以下で設定してください。</p> -->
         <div class="element_wrap">
           <label for="login_id">ログインID</label>
-          <input type="text" name="login_id" class="adminLoginId" maxlength="20" value="<?php if(!empty($post['login_id'])){ echo $post['login_id'];} ?>">
+          <input class="login_id" type="text" name="login_id" maxlength="20" value="<?php if(!empty($post['login_id'])){ echo $post['login_id'];} ?>">
           <?php if(!empty($err_msg['login_id'])){ echo '<br><p class="err_msg">' . $err_msg['login_id'] . '</p>'; } ?>
         </div>
         <div class="element_wrap">
           <label for="pass">パスワード</label>
-          <input type="password" name="pass" class="password">
+          <input class="password" type="password" name="pass">
           <?php if(!empty($err_msg['pass'])){ echo '<br><p class="err_msg">' . $err_msg['pass'] . '</p>'; } ?>
         </div>
         <div class="element_wrap">
           <label for="pass2">パスワード再入力</label>
-          <input type="password" name="pass2" class="password">
+          <input class="password" type="password" name="pass2">
           <?php if(!empty($err_msg['pass2'])){ echo '<br><p class="err_msg">' . $err_msg['pass2'] . '</p>'; } ?>
         </div>
         <div class="element_wrap">
           <label for="name">名前</label>
-          <input type="text" name="name" class="name" value="<?php if(!empty($post['name'])){ echo $post['name']; } ?>">
+          <input class="name" type="text" name="name" value="<?php if(!empty($post['name'])){ echo $post['name']; } ?>">
           <?php if(!empty($err_msg['name'])){ echo '<br><p class="err_msg">' . $err_msg['name'] . '</p>'; } ?>
         </div>
         <div class="element_wrap">
