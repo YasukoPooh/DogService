@@ -18,6 +18,7 @@ use MyApp\AdminUtils;
 <head>
   <meta charset="UTF-8">
   <title> 管理者削除完了 </title>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
@@ -33,7 +34,7 @@ try{
   $stmt->bindValue('id', $admin_id, \PDO::PARAM_INT);
   $stmt->execute();
 
-  echo '削除完了しました' . PHP_EOL;
+  // echo '削除完了しました' . PHP_EOL;
 }
 catch (\PDOException $e)
 {
@@ -43,6 +44,7 @@ catch (\PDOException $e)
 
 ?>
   
+  <p class="message">削除完了しました。</p>
   <a href="admin_list.php">戻る</a>
 </body>
 </html>

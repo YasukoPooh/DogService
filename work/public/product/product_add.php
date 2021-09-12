@@ -74,7 +74,7 @@ if(!empty($_POST['btn_confirm']))
     <form action="" method="POST" enctype="multipart/form-data">
       <div class="element_wrap">
         <label for="name">商品名</label>
-        <input type="text" name="name" class="productName" maxlength="30" value="<?php if(!empty($post['name'])){ echo $post['name']; } ?>">
+        <input type="text" name="name" class="name" maxlength="30" value="<?php if(!empty($post['name'])){ echo $post['name']; } ?>">
         <?php if(!empty($err_msg['name'])){ echo '<br><p class="err_msg">' . $err_msg['name'] . '</p>'; }; ?>
       </div>
       <div class="element_wrap">

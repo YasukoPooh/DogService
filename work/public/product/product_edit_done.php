@@ -16,6 +16,7 @@ use MyApp\Database;
 <head>
   <meta charset="UTF-8">
   <title> 商品編集完了 </title>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
@@ -39,7 +40,7 @@ try
   $stmt->bindValue('id', $post['product_id'], \PDO::PARAM_INT);
   $stmt->execute();
 
-  echo '編集完了しました。' . PHP_EOL;
+  // echo '編集完了しました。' . PHP_EOL;
 }
 catch (\PDOException $e)
 {
@@ -48,6 +49,7 @@ catch (\PDOException $e)
 }
 ?>
   
+  <p class="message">編集完了しました。</p>
   <a href="product_list.php">戻る</a>
 </body>
 </html>

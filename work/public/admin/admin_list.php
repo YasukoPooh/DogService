@@ -76,7 +76,7 @@ catch (\PDOException $e)
 </div>
 
 <br /><br />
-<a href="../admin/admin_top.php">トップメニューへ</a>
+<a href="../admin_login/admin_top.html">トップメニューへ</a>
 
 </body>
 </html>
