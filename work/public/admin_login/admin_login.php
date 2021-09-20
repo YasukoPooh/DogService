@@ -5,11 +5,13 @@ namespace MyApp;
 require_once(__DIR__ . '/../../app/config.php');
 require_once(__DIR__ . '/../../app/Utils.php');
 require_once(__DIR__ . '/../../app/Database.php');
+require_once(__DIR__ . '/../../app/CsrfValid.php');
 require_once(__DIR__ . '/../../app/admin/admin_valid.php');
 
 use Exception;
 use MyApp\Utils;
 use MyApp\Database;
+use MyApp\CsrfValid;
 use MyApp\AdminValid;
 
 $page_flag = 0; // 0 : ログインページへ、1 : ログイン完了ページへ
@@ -36,9 +38,9 @@ if(!empty($_POST['btn_login']))
       $err_msg['login_id'] = 'ログインIDが不正です';
       $checkSt = false;
     }
-    else
+    if($checkSt)
     {
-      list($checkSt, $err_msg) = AdminValid::login_check($post);
+      list($checkSt, $err_msg) = AdminValid::login_check($post, $admin->password);
     }
   }
   catch (\PDOException $e)
@@ -50,6 +52,8 @@ if(!empty($_POST['btn_login']))
   if($checkSt)
   {
     $page_flag = 1;
+    // session_start();
+    // CsrfValid::create($post['login_id']);
   }
 }
 ?>
@@ -66,7 +70,15 @@ if(!empty($_POST['btn_login']))
 <body>
   <?php if(1 === $page_flag): ?>
     <!-- ログイン完了ページへ -->
-    <?php header('Location: admin_top.html'); ?>
+    <div class="login">
+      <p class="sign" align="center">管理者ログイン</p>
+      <form action="../admin_login/admin_top.php" method="post">
+        <?php session_start(); ?>
+        <?php CsrfValid::create($post['login_id']); ?>
+        <input type="hidden" name="token" value="<?php echo Utils::h($_SESSION['token']); ?>">
+        <input type="submit" value="トップページへ" name="btn_login_ok">
+      </form>
+    </div>
   <?php else: ?>
     <!-- ログインページへ -->
     <div class="login">
@@ -78,7 +90,6 @@ if(!empty($_POST['btn_login']))
         <?php if(!empty($err_msg['pass'])){ echo '<br><p class="err_msg">' . $err_msg['pass'] . '</p>'; }; ?>
         <input class="sign_pass" type="password" name="pass" align="center" placeholder="Password">
         <input type="submit" name="btn_login" value="Sign in">
-        <input type="hidden" name="db_pass" value="<?php echo $admin->password; ?>">
       </form>
     </div>
   <?php endif; ?>

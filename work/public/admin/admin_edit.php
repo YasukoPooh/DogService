@@ -5,14 +5,26 @@ namespace MyApp;
 require_once(__DIR__ . '/../../app/config.php');
 require_once(__DIR__ . '/../../app/Utils.php');
 require_once(__DIR__ . '/../../app/Database.php');
+require_once(__DIR__ . '/../../app/CsrfValid.php');
 require_once(__DIR__ . '/../../app/admin/admin_valid.php');
 require_once(__DIR__ . '/../../app/admin/admin_utils.php');
 
 use Exception;
 use MyApp\Utils;
 use MyApp\Database;
+use MyApp\CsrfValid;
 use MyApp\AdminValid;
 use MyApp\AdminUtils;
+
+session_start();
+session_regenerate_id(true);
+$valid = CsrfValid::validate();
+if(!$valid)
+{
+  echo '<p class="err_msg">ログインされていません。</p>';
+  echo '<a href="../admin_login/admin_login.php">ログイン画面へ</a>';
+  exit();
+}
 
 $admin_id = $_GET['admin_id'];
 

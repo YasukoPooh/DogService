@@ -5,12 +5,24 @@ namespace MyApp;
 require_once(__DIR__ . '/../../app/config.php');
 require_once(__DIR__ . '/../../app/Utils.php');
 require_once(__DIR__ . '/../../app/Database.php');
+require_once(__DIR__ . '/../../app/CsrfValid.php');
 require_once(__DIR__ . '/../../app/admin/admin_utils.php');
 
 use Exception;
 use MyApp\Utils;
 use MyApp\Database;
+use MyApp\CsrfValid;
 use MyApp\AdminUtils;
+
+session_start();
+session_regenerate_id(true);
+$valid = CsrfValid::validate();
+if(!$valid)
+{
+  echo '<p class="err_msg">ログインされていません。</p>';
+  echo '<a href="../admin_login/admin_login.php">ログイン画面へ</a>';
+  exit();
+}
 
 ?>
 
@@ -68,6 +80,7 @@ catch (\PDOException $e)
       </table>
     </div>
 
+    <input type="hidden" name="token" value="<?php Utils::h($_SESSION['token']); ?>">
     <input type="submit" name="btn_disp" value="参照">
     <input type="submit" name="btn_add" value="追加">
     <input type="submit" name="btn_edit" value="編集">
@@ -76,7 +89,7 @@ catch (\PDOException $e)
 </div>
 
 <br /><br />
-<a href="../admin_login/admin_top.html">トップメニューへ</a>
+<a href="../admin_login/admin_top.php">トップメニューへ</a>
 
 </body>
 </html>
