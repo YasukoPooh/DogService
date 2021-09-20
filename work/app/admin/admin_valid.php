@@ -213,13 +213,13 @@ class AdminValid
     return [$checkSt, $checkErrMsg];
   }
 
-  public static function login_check($params)
+  public static function login_check($params, $db_pass)
   {
     $checkErrMsg = array();
     $checkSt = true;
 
     // パスワード
-    list($itemCheckSt, $err_msg) = ValidCheck::validPasswordMatch($params['pass'], $params['db_pass']);
+    list($itemCheckSt, $err_msg) = ValidCheck::validPasswordMatch($params['pass'], $db_pass);
     if(!$itemCheckSt)
     {
       $checkErrMsg['pass'] = $err_msg;

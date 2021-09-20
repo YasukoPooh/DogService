@@ -57,7 +57,9 @@ input[name=btn_back],
 input[name=btn_disp],
 input[name=btn_add],
 input[name=btn_edit],
-input[name=btn_delete] {
+input[name=btn_delete],
+input[name=btn_admin],
+input[name=btn_product] {
   margin-top: 10px;
   padding: 5px 20px;
   font-size: 100%;
@@ -69,7 +71,9 @@ input[name=btn_delete] {
   background: #4eaaf1;
 }
 
-input[name=btn_login] {
+input[name=btn_login],
+input[name=btn_login_ok],
+input[name=btn_logout] {
   cursor: pointer;
   border-radius: 5em;
   border: none;

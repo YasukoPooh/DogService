@@ -4,10 +4,22 @@ namespace Myapp;
 
 require_once(__DIR__ . '/../../app/config.php');
 require_once(__DIR__ . '/../../app/Utils.php');
+require_once(__DIR__ . '/../../app/CsrfValid.php');
 require_once(__DIR__ . '/../../app/product/product_valid.php');
 
 use MyApp\Utils;
+use MyApp\CsrfValid;
 use MyApp\ProductValid;
+
+session_start();
+session_regenerate_id(true);
+$valid = CsrfValid::validate();
+if(!$valid)
+{
+  echo '<p class="err_msg">ログインされていません。</p>';
+  echo '<a href="../admin_login/admin_login.php">ログイン画面へ</a>';
+  exit();
+}
 
 $page_flag = 0; // 0 : 入力ページへ、1 : 確認ページへ
 if(!empty($_POST))
