@@ -1,0 +1,247 @@
+body {
+  /* font-family: Arial, sans-serif; */
+  font-family: 'Ubuntu', sans-serif;
+  background-color: #ddf0ff;
+  padding: 20px;
+  text-align: center;
+}
+
+header {
+  display: flex;
+}
+
+h1 {
+  margin-bottom: 20px;
+  padding: 20px 0;
+  color: #209eff;
+  font-size: 122%;
+  border-top: 1px solid #999;
+  border-bottom: 1px solid #999;
+}
+
+input[class=login_id],
+input[class=password],
+input[class=name],
+input[class=email],
+input[class=price] {
+  padding: 5px 10px;
+  font-size: 86%;
+  border: none;
+  border-radius: 3px;
+  background-color: #ffffff;
+}
+
+input[class=sign_login_id],
+input[class=sign_pass] {
+  width: 76%;
+  color: rgb(38, 50, 56);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1px;
+  background-color: rgba(136, 126, 126, 0.04);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  box-sizing: border-box;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  margin-bottom: 50px;
+  text-align: center;
+  margin-bottom: 27px;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+input[name=btn_confirm],
+input[name=btn_add],
+input[name=btn_back],
+input[name=btn_disp],
+input[name=btn_add],
+input[name=btn_edit],
+input[name=btn_delete],
+input[name=btn_admin],
+input[name=btn_product] {
+  margin-top: 10px;
+  padding: 5px 20px;
+  font-size: 100%;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 3px 0 #2887d1;
+  background: #4eaaf1;
+}
+
+input[name=btn_login],
+input[name=btn_login_ok],
+input[name=btn_logout] {
+  cursor: pointer;
+  border-radius: 5em;
+  border: none;
+  color: #fff;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 13px;
+  /* box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.4); */
+  background: linear-gradient(to right, #2887d1, #a2c8e7);
+}
+
+input[name=btn_back] {
+  margin-right: 20px;
+  box-shadow: 0 3px 0 #777;
+  background: #999;
+}
+
+p[class=message] {
+  padding: 5px 10px;
+  font-size: 18px;
+  color: #2887d1;
+  text-align: center;
+}
+
+a {
+  /* text-shadow: 0px 0px 3px #2887d1; */
+  color: #2887d1;
+  text-align: center;
+  text-decoration: none;
+}
+
+.element_wrap {
+  margin-bottom: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  width: 150px;
+}
+
+label[for=sex_male],
+label[for=sex_female] {
+  margin-right: 10px;
+  width: auto;
+  font-weight: normal;
+}
+
+.element_wrap p {
+  display: inline-block;
+  margin: 0;
+  text-align: left;
+}
+
+.err_msg {
+  color: red;
+}
+
+textarea[name=profile],
+textarea[name=comment] {
+  padding: 5px 10px;
+  width: 60%;
+  height: 100px;
+  font-size: 86%;
+  border: none;
+  border-radius: 3px;
+  background: #FFF;
+}
+
+img {
+  width: 200px;
+  height: auto;
+}
+
+table {
+  border-collapse: separate;
+  text-indent: initial;
+  border-spacing: 2px;
+}
+thead {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+tr {
+  vertical-align: inherit;
+  border-color: inherit;
+}
+th {
+  vertical-align: inherit;
+  font-weight: bold;
+  text-align: --internal-center;
+}
+td {
+  vertical-align: inherit;
+}
+.admin_table,
+.product_table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+.admin_table thead,
+.product_table thead {
+  color: #fff;
+  background: #4eaaf1;
+}
+.admin_table thead tr,
+.admin_table tbody tr,
+.product_table thead tr,
+.product_table tbody tr {
+  display: flex;
+}
+.admin_table tbody tr+tr,
+.product_table tbody tr+tr {
+  border-top: 1px solid #ccc;
+}
+.admin_table thead tr th,
+.admin_table tbody tr td,
+.product_table thead tr th,
+.product_table tbody tr td {
+  display: flex;
+  flex: 1;
+  padding: .5em;
+}
+.admin_fixhead_table tbody,
+.product_fixhead_table tbody {
+  overflow: auto;
+  height: 50vh;
+}
+
+.login,
+div[class=admin_top] {
+  background-color: #FFFFFF;
+  width: 400px;
+  height: 400px;
+  margin: 7em auto;
+  border-radius: 1.5em;
+  box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+}
+
+.sign,
+p[class=admin_top] {
+  padding-top: 40px;
+  color: #4eaaf1;
+  font-family: 'ubuntu', sans-serif;
+  font-weight: bold;
+  font-size: 23px;
+}
+
+form.admin_login {
+  padding-top: 40px;
+}
+
+.login_id:focus,
+.login_pass:focus {
+  border: 2px solid rgba(0, 0, 0, 0.18) !important;
+}
